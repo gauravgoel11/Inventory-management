@@ -5,10 +5,23 @@
     <artifactId>Inventory-management</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.46.1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>    
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+    </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.inventory.management.InventoryManagement</exec.mainClass>
+        <exec.mainClass>com.inventory.management.inventory.management.InventoryManagement</exec.mainClass>
     </properties>
 </project>
