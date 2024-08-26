@@ -13,6 +13,7 @@ package com.inventory.management.inventory.management;
 import java.sql.*;
 import java.util.*;
 import org.sqlite.JDBC;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class entry extends javax.swing.JFrame {
 
@@ -35,14 +36,13 @@ public class entry extends javax.swing.JFrame {
 
         empEnt = new javax.swing.JLabel();
         empName = new javax.swing.JComboBox<>();
-
         try{
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from emp");
             while(rs.next()){
-                String s = rs.getString("empID")+" "+rs.getString("empName");
+                String s = rs.getString("empName")+" "+rs.getString("empID");
                 empName.addItem(s);
             }
             con.close();
@@ -50,8 +50,8 @@ public class entry extends javax.swing.JFrame {
         catch(ClassNotFoundException | SQLException e){
             System.out.println("Error is "+e.getMessage());
         }
+        AutoCompleteDecorator.decorate(empName);
         itemName = new javax.swing.JComboBox<>();
-
         try{
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
@@ -61,13 +61,21 @@ public class entry extends javax.swing.JFrame {
                 itemName.addItem(rs.getString("itemName"));
                 System.out.println(rs.getString("itemName"));
             }
-
             con.close();
         }
         catch(ClassNotFoundException | SQLException e){
             System.out.println("Error is "+e.getMessage());
         }
+
+        AutoCompleteDecorator.decorate(itemName);
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        quan = new javax.swing.JSpinner();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        totalTA = new javax.swing.JTextArea();
+        addBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -80,38 +88,56 @@ public class entry extends javax.swing.JFrame {
 
         empName.setEditable(true);
         empName.setToolTipText("");
-        empName.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                empNameComponentAdded(evt);
-            }
-        });
         getContentPane().add(empName);
         empName.setBounds(10, 100, 200, 22);
 
         itemName.setEditable(true);
         itemName.setToolTipText("");
-        itemName.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                itemNameComponentAdded(evt);
-            }
-        });
         getContentPane().add(itemName);
         itemName.setBounds(10, 170, 200, 22);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 70, 790, 10);
 
-        setSize(new java.awt.Dimension(800, 400));
+        jLabel1.setText("Quantity");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(380, 150, 100, 16);
+
+        jLabel2.setText("Employee Name");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(10, 80, 100, 16);
+
+        jLabel3.setText("Item Name");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 150, 100, 16);
+        getContentPane().add(quan);
+        quan.setBounds(380, 170, 90, 22);
+
+        totalTA.setColumns(20);
+        totalTA.setRows(5);
+        jScrollPane1.setViewportView(totalTA);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(60, 240, 470, 180);
+
+        addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addBtn);
+        addBtn.setBounds(260, 210, 75, 23);
+
+        setSize(new java.awt.Dimension(614, 457));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    @SuppressWarnings("ConvertToTryWithResources")
-    private void itemNameComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_itemNameComponentAdded
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_itemNameComponentAdded
-
-    private void empNameComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_empNameComponentAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_empNameComponentAdded
+        String item = (String) itemName.getSelectedItem();
+        int qn = (int) quan.getValue();
+        totalTA.append("\n"+item+" : "+qn);
+    }//GEN-LAST:event_addBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,9 +175,16 @@ public class entry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBtn;
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> empName;
     private javax.swing.JComboBox<String> itemName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSpinner quan;
+    private javax.swing.JTextArea totalTA;
     // End of variables declaration//GEN-END:variables
 }
