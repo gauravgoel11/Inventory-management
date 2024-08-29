@@ -14,6 +14,15 @@ import java.sql.*;
 import java.util.*;
 import org.sqlite.JDBC;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.sql.*;
+import java.util.Date;  // For Date handling
+import java.text.SimpleDateFormat;  // For formatting Date to string
+import com.toedter.calendar.JDateChooser;  // JDateChooser for date selection
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.util.Date;  // For handling Date objects
+import java.text.SimpleDateFormat;  // For formatting Date to a specific pattern
+// For autocomplete in JComboBox
+
 
 public class entry extends javax.swing.JFrame {
 
@@ -76,6 +85,8 @@ public class entry extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         totalTA = new javax.swing.JTextArea();
         addBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -128,15 +139,64 @@ public class entry extends javax.swing.JFrame {
         getContentPane().add(addBtn);
         addBtn.setBounds(260, 210, 75, 23);
 
+        jLabel4.setText("Date");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(380, 80, 100, 20);
+        getContentPane().add(jDateChooser);
+        jDateChooser.setBounds(350, 100, 160, 40);
+
         setSize(new java.awt.Dimension(614, 457));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        String item = (String) itemName.getSelectedItem();
-        int qn = (int) quan.getValue();
-        totalTA.append("\n"+item+" : "+qn);
+        // Get the selected item and quantity
+    String emp = (String) empName.getSelectedItem();
+    String item = (String) itemName.getSelectedItem();
+    int qn = (int) quan.getValue();
+    
+    // Split the employee name to get empName and empID
+    String[] empDetails = emp.split(" ");
+    String empName = empDetails[0];
+    String empID = empDetails[1];
+    
+    // Get the selected date
+    Date selectedDate = jDateChooser.getDate();
+    
+    // Format the date to "yyyy-MM-dd"
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    String entryDate = formatter.format(selectedDate);
+
+    // Insert data into the database
+    try {
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
+        String query = "INSERT INTO entry (empName, empID, itemName, quantity, entryDate) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, empName);
+        pst.setString(2, empID);
+        pst.setString(3, item);
+        pst.setInt(4, qn);
+        pst.setString(5, entryDate);  // Insert the formatted date
+
+        int result = pst.executeUpdate();
+        
+        if (result > 0) {
+            totalTA.append("\nEntry added: " + item + " : " + qn + " on " + entryDate);
+        } else {
+            totalTA.append("\nFailed to add entry.");
+        }
+
+        pst.close();
+        con.close();
+    } catch (ClassNotFoundException | SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+        totalTA.append("\nError: " + e.getMessage());
+    }
+
+        
+        
     }//GEN-LAST:event_addBtnActionPerformed
 
     /**
@@ -179,9 +239,11 @@ public class entry extends javax.swing.JFrame {
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> empName;
     private javax.swing.JComboBox<String> itemName;
+    private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner quan;
