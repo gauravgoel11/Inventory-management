@@ -13,7 +13,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.print.PrinterException;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+//import org.apache.commons.dbutils.DbUtils;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.print.PrinterException;
+import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -30,6 +50,10 @@ public class Employee extends javax.swing.JFrame {
     public Employee() {
         initComponents();
     }
+    
+    
+    
+    
     
 
     /**
@@ -58,6 +82,7 @@ public class Employee extends javax.swing.JFrame {
         jButtonReset = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +127,7 @@ public class Employee extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Name", "Age", "EmployeeID", "Mobile Number"
+                "EmployeeID", "Name", "age", "Mobile Number"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -128,7 +153,7 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
-        jButtonReset.setText("Reset\n");
+        jButtonReset.setText("Erase");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonResetActionPerformed(evt);
@@ -146,6 +171,13 @@ public class Employee extends javax.swing.JFrame {
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -189,7 +221,9 @@ public class Employee extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonUpdateData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 878, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(87, Short.MAX_VALUE))
         );
@@ -201,7 +235,8 @@ public class Employee extends javax.swing.JFrame {
                         .addGap(113, 113, 113)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAddData)
-                            .addComponent(jButtonUpdateData))
+                            .addComponent(jButtonUpdateData)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonPrint)
@@ -366,6 +401,41 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
     }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            try {
+        // Connect to the database
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+        String sql = "SELECT * FROM emp";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        
+        // Get table model
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        // Clear existing data
+        model.setRowCount(0);
+
+        // Get column names dynamically
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        
+        // Add rows to the model
+        while (rs.next()) {
+            Object[] row = new Object[columnCount];
+            for (int i = 1; i <= columnCount; i++) {
+                row[i - 1] = rs.getObject(i);
+            }
+            model.addRow(row);
+        }
+        
+        // Close connections
+        rs.close();
+        pstmt.close();
+        conn.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -399,10 +469,16 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
                 new Employee().setVisible(true);
             }
         });
+        
 
     }
+  
+  
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAddData;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonExit;
