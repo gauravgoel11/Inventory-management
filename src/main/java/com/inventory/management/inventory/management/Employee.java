@@ -130,6 +130,11 @@ public class Employee extends javax.swing.JFrame {
                 "EmployeeID", "Name", "age", "Mobile Number"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButtonAddData.setText("AddData");
@@ -435,6 +440,22 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
         JOptionPane.showMessageDialog(null, e.getMessage());
     }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        // Get the selected row index
+    int selectedRow = jTable1.getSelectedRow();
+    
+    // Retrieve data from the selected row and set them to the corresponding text fields
+    jTxtEmployeeId.setText("");
+    jTxtName.setText("");
+    jTxtAge.setText("");
+    jTxtMobile.setText("");
+    jTxtEmployeeId.setText(jTable1.getValueAt(selectedRow, 0).toString());
+    jTxtName.setText(jTable1.getValueAt(selectedRow, 1).toString());
+    jTxtAge.setText(jTable1.getValueAt(selectedRow, 2).toString());
+    jTxtMobile.setText(jTable1.getValueAt(selectedRow, 3).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

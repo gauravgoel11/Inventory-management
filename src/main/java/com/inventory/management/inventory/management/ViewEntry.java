@@ -87,6 +87,7 @@ public class ViewEntry extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(empName);
         jButtonCusotmEntry = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
+        jBtnTotalWork = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -152,6 +153,13 @@ public class ViewEntry extends javax.swing.JFrame {
             }
         });
 
+        jBtnTotalWork.setText("Total work");
+        jBtnTotalWork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnTotalWorkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -180,15 +188,19 @@ public class ViewEntry extends javax.swing.JFrame {
                         .addGap(71, 71, 71)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonCusotmEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jButtonCusotmEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBtnTotalWork)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(42, 42, 42))
             .addComponent(empEnt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -221,9 +233,10 @@ public class ViewEntry extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonExit)
-                            .addComponent(jButton1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addComponent(jBtnTotalWork))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -386,6 +399,95 @@ try {
         empName.setSelectedIndex(-1);
     }//GEN-LAST:event_jButtonResetActionPerformed
 
+    private void jBtnTotalWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalWorkActionPerformed
+                                               
+    try {
+    // Get selected employee name and ID
+    String selectedEmployee = (empName.getSelectedIndex() != -1) ? empName.getSelectedItem().toString() : "";
+    
+    String empName = "";
+    String empID = "";
+    
+    // Check if an employee is selected
+    if (!selectedEmployee.isEmpty()) {
+        String[] employeeData = selectedEmployee.split(" ");
+        empName = employeeData[0];
+        empID = employeeData[1];
+    }
+    
+    // Get selected dates
+    java.util.Date fromDate = jDateChooserFrom.getDate();
+    java.util.Date toDate = jDateChooserTo.getDate();
+    
+    // Format the date to "yyyy-MM-dd"
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    String formattedFromDate = (fromDate != null) ? formatter.format(fromDate) : null;
+    String formattedToDate = (toDate != null) ? formatter.format(toDate) : null;
+    
+    // Prepare SQL query dynamically
+    StringBuilder query = new StringBuilder("SELECT empName, empID, itemName, SUM(quantity) as totalQuantity FROM entry WHERE 1=1");
+    
+    if (!empName.isEmpty()) {
+        query.append(" AND empName = ? AND empID = ?");
+    }
+    if (formattedFromDate != null) {
+        query.append(" AND entryDate >= ?");
+    }
+    if (formattedToDate != null) {
+        query.append(" AND entryDate <= ?");
+    }
+    query.append(" GROUP BY empName, empID, itemName");
+    
+    // Connect to the database
+    Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+    PreparedStatement pstmt = conn.prepareStatement(query.toString());
+    
+    // Set parameters dynamically
+    int paramIndex = 1;
+    
+    if (!empName.isEmpty()) {
+        pstmt.setString(paramIndex++, empName);
+        pstmt.setString(paramIndex++, empID);
+    }
+    if (formattedFromDate != null) {
+        pstmt.setString(paramIndex++, formattedFromDate);
+    }
+    if (formattedToDate != null) {
+        pstmt.setString(paramIndex++, formattedToDate);
+    }
+    
+    // Execute query
+    ResultSet rs = pstmt.executeQuery();
+    
+    // Get the table model from your JTable
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    
+    // Clear the existing rows in the table
+    model.setRowCount(0);
+    
+    // Populate the table with the query result
+    while (rs.next()) {
+        String resultEmpName = rs.getString("empName");
+        String resultEmpID = rs.getString("empID");
+        String itemName = rs.getString("itemName");
+        int totalQuantity = rs.getInt("totalQuantity");
+        
+        // Add a new row to the table model
+        model.addRow(new Object[]{resultEmpName, resultEmpID, itemName, totalQuantity});
+    }
+    
+    // Close connections
+    rs.close();
+    pstmt.close();
+    conn.close();
+    
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(null, e.getMessage());
+}
+
+
+    }//GEN-LAST:event_jBtnTotalWorkActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,6 +526,7 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> empName;
+    private javax.swing.JButton jBtnTotalWork;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCusotmEntry;
     private javax.swing.JButton jButtonExit;
