@@ -122,7 +122,7 @@ public class AdminEntry extends javax.swing.JFrame {
         jScrollPane1.setViewportView(totalTA);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 240, 520, 130);
+        jScrollPane1.setBounds(20, 240, 580, 130);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 390));
 
