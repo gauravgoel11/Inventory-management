@@ -387,47 +387,39 @@ private JFrame frame;
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jBtnTotalStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalStockActionPerformed
-                                               
-      try {
-    StringBuilder query = new StringBuilder(
-      "SELECT ae.itemName, COALESCE(SUM(ae.quantity), 0) - COALESCE(SUM(e.quantity), 0) as totalQuantity " +
-      "FROM adminentry ae " +
-      "LEFT JOIN entry e ON ae.itemName = e.itemName " +
-      "GROUP BY ae.itemName " +
-      "UNION ALL " +
-      "SELECT e.itemName, -COALESCE(SUM(e.quantity), 0) as totalQuantity " +
-      "FROM adminentry ae " +
-      "RIGHT JOIN entry e ON ae.itemName = e.itemName " +
-      "WHERE ae.itemName IS NULL " +
-      "GROUP BY e.itemName"
-    );
+            try {
+        String query = 
+            "SELECT itemName, SUM(creditQuantity) - SUM(debitQuantity) as totalStock " +
+            "FROM ( " +
+            "  SELECT itemName, SUM(quantity) as creditQuantity, 0 as debitQuantity " +
+            "  FROM adminentry " +
+            "  GROUP BY itemName " +
+            "  UNION " +
+            "  SELECT itemName, 0 as creditQuantity, SUM(quantity) as debitQuantity " +
+            "  FROM entry " +
+            "  GROUP BY itemName " +
+            ") " +
+            "GROUP BY itemName";
 
-    Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-    PreparedStatement pstmt = conn.prepareStatement(query.toString());
-    ResultSet rs = pstmt.executeQuery();
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
 
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Clear existing data
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
 
-    while (rs.next()) {
-      String itemName = rs.getString("itemName");
-      int totalQuantity = rs.getInt("totalQuantity");
-      model.addRow(new Object[]{itemName, totalQuantity});
-    }
+        while (rs.next()) {
+            String itemName = rs.getString("itemName");
+            int totalStock = rs.getInt("totalStock");
+            model.addRow(new Object[]{itemName, totalStock});
+        }
 
-    rs.close();
-    pstmt.close();
-    conn.close();
-  } catch (SQLException e) {
-    JOptionPane.showMessageDialog(null, e.getMessage());
-  }
-
-
-
-
-
-
-
+        rs.close();
+        pstmt.close();
+        conn.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }                                  
     }//GEN-LAST:event_jBtnTotalStockActionPerformed
 
     private void itemNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNameActionPerformed
