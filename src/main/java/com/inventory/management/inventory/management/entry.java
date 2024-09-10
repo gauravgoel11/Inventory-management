@@ -87,6 +87,7 @@ public class entry extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jDateChooser = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -145,6 +146,15 @@ public class entry extends javax.swing.JFrame {
         getContentPane().add(jDateChooser);
         jDateChooser.setBounds(350, 100, 160, 40);
 
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(530, 80, 60, 23);
+
         setSize(new java.awt.Dimension(614, 457));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -199,6 +209,11 @@ public class entry extends javax.swing.JFrame {
         
     }//GEN-LAST:event_addBtnActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new AdminMenu().setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -239,6 +254,7 @@ public class entry extends javax.swing.JFrame {
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> empName;
     private javax.swing.JComboBox<String> itemName;
+    private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

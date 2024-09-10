@@ -84,6 +84,7 @@ public class PerPieceCost extends javax.swing.JFrame {
         jButtonAdd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -151,6 +152,15 @@ public class PerPieceCost extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(0, 192, 730, 250);
+
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(620, 100, 75, 23);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 450));
 
@@ -227,6 +237,11 @@ String selectedItem = (String) itemName.getSelectedItem();
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnViewActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      new AdminMenu().setVisible(true);
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -266,6 +281,9 @@ String selectedItem = (String) itemName.getSelectedItem();
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> itemName;
     private javax.swing.JButton jBtnView;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

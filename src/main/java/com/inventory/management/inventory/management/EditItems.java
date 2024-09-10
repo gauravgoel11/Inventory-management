@@ -68,6 +68,7 @@ public class EditItems extends javax.swing.JFrame {
         jBtnAdd = new javax.swing.JButton();
         jBtnDelete = new javax.swing.JButton();
         jBtnView = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,6 +140,15 @@ public class EditItems extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnView);
         jBtnView.setBounds(610, 90, 72, 23);
+
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(460, 90, 60, 23);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 460));
 
@@ -227,6 +237,11 @@ int selectedRow = jTable1.getSelectedRow();
     }        // TODO add your handling code here:
     }//GEN-LAST:event_jBtnDeleteActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new AdminMenu().setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +283,7 @@ int selectedRow = jTable1.getSelectedRow();
     private javax.swing.JButton jBtnAdd;
     private javax.swing.JButton jBtnDelete;
     private javax.swing.JButton jBtnView;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

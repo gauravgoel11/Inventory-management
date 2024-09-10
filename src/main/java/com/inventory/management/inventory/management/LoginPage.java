@@ -183,12 +183,12 @@ String userId = jTfUserId.getText();
         if (userId.equals("admin") && password.equals("admin123")) {
             JOptionPane.showMessageDialog(this, "Login successful as Admin");
             // Redirect to Admin Dashboard
-             new Employee().setVisible(true);
+             new AdminMenu().setVisible(true);
             this.dispose(); // Close login window
         } else if (userId.equals("user") && password.equals("user123")) {
             JOptionPane.showMessageDialog(this, "Login successful as User");
             // Redirect to User Dashboard
-             new Employee().setVisible(true);
+             new entry().setVisible(true);
             
             this.dispose(); // Close login window
         } else {
