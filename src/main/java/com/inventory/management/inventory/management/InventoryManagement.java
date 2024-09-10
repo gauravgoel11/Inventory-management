@@ -27,6 +27,6 @@ public class InventoryManagement {
         catch(ClassNotFoundException | SQLException e){
             System.out.println("Error is "+e.getMessage());
         }
-        new entry().setVisible(true);
+        new A_Welcome().setVisible(true);
     }
 }

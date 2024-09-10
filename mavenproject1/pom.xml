@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.inventory.management</groupId>
-    <artifactId>Inventory-management</artifactId>
+    <artifactId>mavenproject1</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-            <build>
+        <build>
         <plugins>
             <!-- Maven Assembly Plugin to generate the JAR with MANIFEST.MF -->
             <plugin>
@@ -15,7 +15,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.inventory.management.inventory.management.InventoryManagement</mainClass>
+                            <mainClass>com.inventory.management.mavenproject1.Mavenproject1</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -34,6 +34,13 @@
             </plugin>
         </plugins>
     </build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <exec.mainClass>com.inventory.management.mavenproject1.Mavenproject1</exec.mainClass>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.xerial</groupId>
@@ -62,7 +69,6 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
-<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -70,10 +76,4 @@
         </dependency>
 
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.inventory.management.inventory.management.A_Welcome</exec.mainClass>
-    </properties>
 </project>
