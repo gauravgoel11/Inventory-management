@@ -165,6 +165,7 @@ public class PerPieceCost extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 450));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
@@ -282,8 +283,6 @@ String selectedItem = (String) itemName.getSelectedItem();
     private javax.swing.JComboBox<String> itemName;
     private javax.swing.JButton jBtnView;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

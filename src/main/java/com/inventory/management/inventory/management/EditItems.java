@@ -64,7 +64,6 @@ public class EditItems extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jTFItemName = new javax.swing.JTextField();
-        JBtnEdit = new javax.swing.JButton();
         jBtnAdd = new javax.swing.JButton();
         jBtnDelete = new javax.swing.JButton();
         jBtnView = new javax.swing.JButton();
@@ -110,10 +109,6 @@ public class EditItems extends javax.swing.JFrame {
         jPanel1.add(jTFItemName);
         jTFItemName.setBounds(130, 92, 150, 40);
 
-        JBtnEdit.setText("Edit");
-        jPanel1.add(JBtnEdit);
-        JBtnEdit.setBounds(530, 90, 72, 23);
-
         jBtnAdd.setText("Add");
         jBtnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,11 +143,12 @@ public class EditItems extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(460, 90, 60, 23);
+        jButton2.setBounds(530, 90, 70, 23);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 460));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -278,7 +274,6 @@ int selectedRow = jTable1.getSelectedRow();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBtnEdit;
     private javax.swing.JLabel empEnt;
     private javax.swing.JButton jBtnAdd;
     private javax.swing.JButton jBtnDelete;

@@ -42,7 +42,7 @@ public class AdminMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setLayout(null);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Employee entry");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -50,8 +50,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(90, 110, 170, 23);
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 103, 200, 30));
 
         jButton2.setText("Entry of Stock");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -59,8 +58,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(90, 140, 170, 23);
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 200, 30));
 
         jButton3.setText("Edit Items");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -68,8 +66,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3);
-        jButton3.setBounds(90, 170, 170, 23);
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 200, 30));
 
         jButton4.setText("Employee management");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -77,8 +74,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4);
-        jButton4.setBounds(410, 200, 170, 23);
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, 180, 30));
 
         jButton5.setText("View Part Entry");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -86,8 +82,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5);
-        jButton5.setBounds(410, 260, 170, 23);
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 180, 30));
 
         jButton6.setText("part entry of employees");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -95,8 +90,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6);
-        jButton6.setBounds(90, 230, 170, 23);
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 200, 30));
 
         jButton7.setText("View Admin Entry");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -104,8 +98,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton7);
-        jButton7.setBounds(410, 140, 170, 23);
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 180, 30));
 
         jButton8.setText("view Inventory stock");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +106,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8);
-        jButton8.setBounds(410, 170, 170, 23);
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 180, 30));
 
         jButton9.setText("Per Price Cost");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -122,8 +114,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton9);
-        jButton9.setBounds(90, 200, 170, 23);
+        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, 30));
 
         jButton10.setText("Part made from items");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -131,8 +122,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton10);
-        jButton10.setBounds(410, 230, 170, 23);
+        jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 180, 30));
 
         jButton11.setText("View Employee Entry");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -140,12 +130,12 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton11ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton11);
-        jButton11.setBounds(410, 110, 170, 23);
+        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 180, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 430));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -189,7 +179,8 @@ new ViewInventoryStock().setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+new PerPieceCost().setVisible(true);
+            this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed

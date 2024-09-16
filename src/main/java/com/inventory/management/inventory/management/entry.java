@@ -31,6 +31,7 @@ public class entry extends javax.swing.JFrame {
      */
     public entry() {
         initComponents();
+
     }
     
     
@@ -81,13 +82,13 @@ public class entry extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        quan = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         totalTA = new javax.swing.JTextArea();
         addBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jDateChooser = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
+        quan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -101,18 +102,18 @@ public class entry extends javax.swing.JFrame {
         empName.setEditable(true);
         empName.setToolTipText("");
         getContentPane().add(empName);
-        empName.setBounds(10, 100, 200, 22);
+        empName.setBounds(10, 100, 200, 30);
 
         itemName.setEditable(true);
         itemName.setToolTipText("");
         getContentPane().add(itemName);
-        itemName.setBounds(10, 170, 200, 22);
+        itemName.setBounds(10, 170, 200, 30);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 70, 790, 10);
 
         jLabel1.setText("Quantity");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(380, 150, 100, 16);
+        jLabel1.setBounds(350, 160, 100, 16);
 
         jLabel2.setText("Employee Name");
         getContentPane().add(jLabel2);
@@ -121,8 +122,6 @@ public class entry extends javax.swing.JFrame {
         jLabel3.setText("Item Name");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 150, 100, 16);
-        getContentPane().add(quan);
-        quan.setBounds(380, 170, 90, 22);
 
         totalTA.setColumns(20);
         totalTA.setRows(5);
@@ -142,7 +141,7 @@ public class entry extends javax.swing.JFrame {
 
         jLabel4.setText("Date");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(380, 80, 100, 20);
+        jLabel4.setBounds(350, 80, 100, 20);
         getContentPane().add(jDateChooser);
         jDateChooser.setBounds(350, 100, 160, 40);
 
@@ -153,9 +152,11 @@ public class entry extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(530, 80, 60, 23);
+        jButton2.setBounds(520, 80, 80, 23);
+        getContentPane().add(quan);
+        quan.setBounds(350, 180, 140, 30);
 
-        setSize(new java.awt.Dimension(614, 457));
+        setSize(new java.awt.Dimension(616, 457));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -164,7 +165,7 @@ public class entry extends javax.swing.JFrame {
         // Get the selected item and quantity
     String emp = (String) empName.getSelectedItem();
     String item = (String) itemName.getSelectedItem();
-    int qn = (int) quan.getValue();
+    int qn = Integer.parseInt(quan.getText());
     
     // Split the employee name to get empName and empID
     String[] empDetails = emp.split(" ");
@@ -262,7 +263,7 @@ public class entry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner quan;
+    private javax.swing.JTextField quan;
     private javax.swing.JTextArea totalTA;
     // End of variables declaration//GEN-END:variables
 }

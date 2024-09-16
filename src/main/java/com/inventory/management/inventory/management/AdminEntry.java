@@ -26,6 +26,8 @@ public class AdminEntry extends javax.swing.JFrame {
      */
     public AdminEntry() {
         initComponents();
+                totalTA.setLineWrap(true);
+        totalTA.setWrapStyleWord(true);
     }
 
     /**
@@ -85,7 +87,7 @@ public class AdminEntry extends javax.swing.JFrame {
         itemName.setEditable(true);
         itemName.setToolTipText("");
         jPanel1.add(itemName);
-        itemName.setBounds(10, 170, 200, 22);
+        itemName.setBounds(10, 170, 200, 30);
 
         jLabel3.setText("Item Name");
         jPanel1.add(jLabel3);
@@ -99,15 +101,21 @@ public class AdminEntry extends javax.swing.JFrame {
 
         jLabel4.setText("Date");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(380, 80, 100, 20);
+        jLabel4.setBounds(350, 80, 100, 20);
         jPanel1.add(jDateChooser);
         jDateChooser.setBounds(350, 100, 160, 40);
 
         jLabel1.setText("Quantity");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(380, 150, 100, 16);
+        jLabel1.setBounds(350, 150, 100, 16);
+
+        jTextFieldQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldQuantityActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldQuantity);
-        jTextFieldQuantity.setBounds(360, 170, 140, 30);
+        jTextFieldQuantity.setBounds(350, 170, 160, 30);
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -132,11 +140,12 @@ public class AdminEntry extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(540, 80, 60, 23);
+        jButton2.setBounds(520, 80, 80, 30);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 390));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -167,11 +176,11 @@ public class AdminEntry extends javax.swing.JFrame {
             pst.setString(4, formattedDate);
 
             int rowsAffected = pst.executeUpdate();
-            if (rowsAffected > 0) {
-                totalTA.setText("Entry successfully added!");
-            } else {
-                totalTA.setText("Failed to add entry.");
-            }
+           if (rowsAffected > 0) {
+    totalTA.append("\nEntry added: " + selectedItem + " : " + quantity + " on " + formattedDate);
+} else {
+    totalTA.append("\nFailed to add entry.");
+}
 
             con.close();
         } catch (NumberFormatException e) {
@@ -185,6 +194,10 @@ public class AdminEntry extends javax.swing.JFrame {
 new AdminMenu().setVisible(true);
             this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextFieldQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQuantityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldQuantityActionPerformed
 
     /**
      * @param args the command line arguments

@@ -133,12 +133,12 @@ public class Part_items extends javax.swing.JFrame {
         empName.setEditable(true);
         empName.setToolTipText("");
         getContentPane().add(empName);
-        empName.setBounds(10, 100, 200, 22);
+        empName.setBounds(10, 100, 200, 30);
 
         itemName.setEditable(true);
         itemName.setToolTipText("");
         getContentPane().add(itemName);
-        itemName.setBounds(10, 170, 200, 22);
+        itemName.setBounds(10, 170, 200, 30);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 70, 790, 10);
 
@@ -174,7 +174,7 @@ public class Part_items extends javax.swing.JFrame {
 
         jLabel5.setText("Existing Part Name");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 80, 100, 16);
+        jLabel5.setBounds(10, 80, 140, 16);
         getContentPane().add(jTextFieldQuantity);
         jTextFieldQuantity.setBounds(330, 170, 160, 30);
 
