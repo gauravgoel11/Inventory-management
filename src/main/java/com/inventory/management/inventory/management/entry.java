@@ -152,7 +152,7 @@ public class entry extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(520, 80, 80, 23);
+        jButton2.setBounds(530, 80, 70, 23);
         getContentPane().add(quan);
         quan.setBounds(350, 180, 140, 30);
 
