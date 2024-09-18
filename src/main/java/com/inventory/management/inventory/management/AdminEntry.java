@@ -27,7 +27,7 @@ public class AdminEntry extends javax.swing.JFrame {
     public AdminEntry() {
         initComponents();
                 totalTA.setLineWrap(true);
-        totalTA.setWrapStyleWord(true);
+        totalTA.setWrapStyleWord(true);       
     }
 
     /**
