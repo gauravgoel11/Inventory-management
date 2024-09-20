@@ -20,7 +20,16 @@ import java.text.SimpleDateFormat;  // For formatting Date to string
 import com.toedter.calendar.JDateChooser;  // JDateChooser for date selection
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.util.Date;  // For handling Date objects
-import java.text.SimpleDateFormat;  // For formatting Date to a specific pattern
+import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+// For formatting Date to a specific pattern
 // For autocomplete in JComboBox
 
 
@@ -31,6 +40,7 @@ public class Part_entry extends javax.swing.JFrame {
      */
     public Part_entry() {
         initComponents();
+        jDateChooser.setDate(new Date());
     }
     
     
@@ -60,23 +70,28 @@ public class Part_entry extends javax.swing.JFrame {
             System.out.println("Error is "+e.getMessage());
         }
         AutoCompleteDecorator.decorate(empName);
-        partName = new javax.swing.JComboBox<>();
-        try{
+        jcombopartname = new javax.swing.JComboBox<>();
+        try {
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from part_items");
-            while(rs.next()){
-                partName.addItem(rs.getString("partName"));
-                System.out.println(rs.getString("partName"));
+
+            Set<String> partNames = new HashSet<>();
+            while (rs.next()) {
+                String s = rs.getString("partName");
+                partNames.add(s);
             }
             con.close();
-        }
-        catch(ClassNotFoundException | SQLException e){
-            System.out.println("Error is "+e.getMessage());
+
+            for (String partName : partNames) {
+                jcombopartname.addItem(partName);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Error is " + e.getMessage());
         }
 
-        AutoCompleteDecorator.decorate(partName);
+        AutoCompleteDecorator.decorate(jcombopartname);
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -103,10 +118,10 @@ public class Part_entry extends javax.swing.JFrame {
         getContentPane().add(empName);
         empName.setBounds(10, 100, 200, 30);
 
-        partName.setEditable(true);
-        partName.setToolTipText("");
-        getContentPane().add(partName);
-        partName.setBounds(10, 170, 200, 30);
+        jcombopartname.setEditable(true);
+        jcombopartname.setToolTipText("");
+        getContentPane().add(jcombopartname);
+        jcombopartname.setBounds(10, 170, 200, 30);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 70, 790, 10);
 
@@ -163,7 +178,7 @@ public class Part_entry extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Get the selected item and quantity
     String emp = (String) empName.getSelectedItem();
-    String item = (String) partName.getSelectedItem();
+    String item = (String) jcombopartname.getSelectedItem();
     int qn = Integer.parseInt(quan.getText());
     
     // Split the employee name to get empName and empID
@@ -204,6 +219,7 @@ public class Part_entry extends javax.swing.JFrame {
         System.out.println("Error: " + e.getMessage());
         totalTA.append("\nError: " + e.getMessage());
     }
+    quan.setText("");
 
         
         
@@ -262,7 +278,7 @@ public class Part_entry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox<String> partName;
+    private javax.swing.JComboBox<String> jcombopartname;
     private javax.swing.JTextField quan;
     private javax.swing.JTextArea totalTA;
     // End of variables declaration//GEN-END:variables

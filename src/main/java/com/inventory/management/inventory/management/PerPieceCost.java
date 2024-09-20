@@ -46,6 +46,7 @@ public class PerPieceCost extends javax.swing.JFrame {
      */
     public PerPieceCost() {
         initComponents();
+        itemName.setSelectedIndex(-1);
     }
 
     /**

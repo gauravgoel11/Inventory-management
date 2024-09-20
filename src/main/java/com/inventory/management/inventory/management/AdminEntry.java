@@ -27,7 +27,8 @@ public class AdminEntry extends javax.swing.JFrame {
     public AdminEntry() {
         initComponents();
                 totalTA.setLineWrap(true);
-        totalTA.setWrapStyleWord(true);       
+        totalTA.setWrapStyleWord(true); 
+        jDateChooser.setDate(new Date());
     }
 
     /**
@@ -93,7 +94,7 @@ public class AdminEntry extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(10, 150, 100, 16);
 
-        jLabel2.setText("Admin Name");
+        jLabel2.setText("Buyer Name");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 76, 100, 20);
         jPanel1.add(jTextFieldAdminName);
@@ -188,6 +189,7 @@ public class AdminEntry extends javax.swing.JFrame {
         } catch (Exception e) {
             totalTA.setText("Error: " + e.getMessage());
         }
+        jTextFieldQuantity.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -33,6 +33,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.print.PrinterException;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.print.PrinterException;
+import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.text.SimpleDateFormat;
 
 
 
@@ -69,7 +79,6 @@ public class Employee extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTxtName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTxtAge = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTxtMobile = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -84,6 +93,9 @@ public class Employee extends javax.swing.JFrame {
         jButtonDelete = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jDateChooserDateOfBirth = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jTxtAadharNumber = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,14 +108,7 @@ public class Employee extends javax.swing.JFrame {
         jTxtName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setText("Age");
-
-        jTxtAge.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTxtAge.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtAgeActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("DOB");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setText("Employee ID");
@@ -122,13 +127,13 @@ public class Employee extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "EmployeeID", "Name", "age", "Mobile Number"
+                "EmployeeID", "Name", "D.O.B", "Mobile Number", "Aadhar Number"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -180,7 +185,7 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Refresh");
+        jButton1.setText("All entry");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -194,6 +199,11 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setText("Aadhar Num.");
+
+        jTxtAadharNumber.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,11 +211,7 @@ public class Employee extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,11 +219,19 @@ public class Employee extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTxtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jDateChooserDateOfBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtEmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtEmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtAadharNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(96, 96, 96)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonAddData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -233,11 +247,14 @@ public class Employee extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(122, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,14 +279,14 @@ public class Employee extends javax.swing.JFrame {
                             .addComponent(jButtonExit))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDateChooserDateOfBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,8 +295,12 @@ public class Employee extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtAadharNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -289,33 +310,37 @@ public class Employee extends javax.swing.JFrame {
 
     private void jButtonAddDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddDataActionPerformed
         // TODO add your handling code here:
-         String name = jTxtName.getText();
-        int age = Integer.parseInt(jTxtAge.getText());
-        String employeeId = jTxtEmployeeId.getText();
-        String mobile = jTxtMobile.getText();
+                                               
+    String name = jTxtName.getText();
+    java.util.Date dateOfBirth = jDateChooserDateOfBirth.getDate();
+    String employeeId = jTxtEmployeeId.getText();
+    String mobile = jTxtMobile.getText();
+    String aadharNumber = jTxtAadharNumber.getText();
 
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String sql = "INSERT INTO emp (empName, age, empId, mobile) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, age);
-            pstmt.setString(3, employeeId);
-            pstmt.setString(4, mobile);
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    String formattedDateOfBirth = (dateOfBirth != null) ? formatter.format(dateOfBirth) : null;
 
-            pstmt.executeUpdate();
-            conn.close();
+    try {
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+        String sql = "INSERT INTO emp (empName, dateOfBirth, empId, mobile, aadharNumber) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, name);
+        pstmt.setString(2, formattedDateOfBirth);
+        pstmt.setString(3, employeeId);
+        pstmt.setString(4, mobile);
+        pstmt.setString(5, aadharNumber);
 
-            JOptionPane.showMessageDialog(null, "Data Added Successfully");
+        pstmt.executeUpdate();
+        conn.close();
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+        JOptionPane.showMessageDialog(null, "Data Added Successfully");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+
+
+
     }//GEN-LAST:event_jButtonAddDataActionPerformed
-
-    private void jTxtAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtAgeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtAgeActionPerformed
 
     private void jTxtEmployeeIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtEmployeeIdActionPerformed
         // TODO add your handling code here:
@@ -334,41 +359,107 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         // TODO add your handling code here:
-        jTxtName.setText("");
-        jTxtAge.setText("");
-        jTxtEmployeeId.setText("");
-        jTxtMobile.setText("");
+  
+    jTxtName.setText("");
+    jDateChooserDateOfBirth.setDate(null);
+    jTxtEmployeeId.setText("");
+    jTxtMobile.setText("");
+    jTxtAadharNumber.setText("");
+
+
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jButtonUpdateDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateDataActionPerformed
-        // TODO add your handling code here:
-            String name = jTxtName.getText();
-    String age = jTxtAge.getText();
+                                                
+    String name = jTxtName.getText();
+    java.util.Date dateOfBirth = jDateChooserDateOfBirth.getDate();
     String employeeId = jTxtEmployeeId.getText();
     String mobile = jTxtMobile.getText();
+    String aadharNumber = jTxtAadharNumber.getText();
 
-    if (!employeeId.isEmpty()) {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    String formattedDateOfBirth = (dateOfBirth != null) ? formatter.format(dateOfBirth) : null;
+
+    if (!employeeId.isEmpty() && !name.isEmpty()) {
         try {
-            // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String sql = "UPDATE emp SET empName = ?, age = ?, mobile = ? WHERE empId = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setString(2, age);
-            pstmt.setString(3, mobile);
-            pstmt.setString(4, employeeId);
+            
+            // Fetch the current data from the database
+            String fetchSql = "SELECT * FROM emp WHERE empId = ? AND empName = ?";
+            PreparedStatement fetchPstmt = conn.prepareStatement(fetchSql);
+            fetchPstmt.setString(1, employeeId);
+            fetchPstmt.setString(2, name);
+            ResultSet rs = fetchPstmt.executeQuery();
+            
+            if (rs.next()) {
+                String currentName = rs.getString("empName");
+                String currentDateOfBirth = rs.getString("dateOfBirth");
+                String currentMobile = rs.getString("mobile");
+                String currentAadharNumber = rs.getString("aadharNumber");
 
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Data updated successfully!");
+                // Build the update query dynamically based on changed fields
+                StringBuilder sql = new StringBuilder("UPDATE emp SET ");
+                boolean firstField = true;
+
+                if (!name.equals(currentName)) {
+                    sql.append("empName = ?");
+                    firstField = false;
+                }
+                if (formattedDateOfBirth != null && !formattedDateOfBirth.equals(currentDateOfBirth)) {
+                    if (!firstField) sql.append(", ");
+                    sql.append("dateOfBirth = ?");
+                    firstField = false;
+                }
+                if (!mobile.equals(currentMobile)) {
+                    if (!firstField) sql.append(", ");
+                    sql.append("mobile = ?");
+                    firstField = false;
+                }
+                if (!aadharNumber.equals(currentAadharNumber)) {
+                    if (!firstField) sql.append(", ");
+                    sql.append("aadharNumber = ?");
+                }
+
+                sql.append(" WHERE empId = ? AND empName = ?");
+
+                PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+                int paramIndex = 1;
+
+                if (!name.equals(currentName)) {
+                    pstmt.setString(paramIndex++, name);
+                }
+                if (formattedDateOfBirth != null && !formattedDateOfBirth.equals(currentDateOfBirth)) {
+                    pstmt.setString(paramIndex++, formattedDateOfBirth);
+                }
+                if (!mobile.equals(currentMobile)) {
+                    pstmt.setString(paramIndex++, mobile);
+                }
+                if (!aadharNumber.equals(currentAadharNumber)) {
+                    pstmt.setString(paramIndex++, aadharNumber);
+                }
+
+                pstmt.setString(paramIndex++, employeeId);
+                pstmt.setString(paramIndex++, currentName);
+
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(null, "Data updated successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No matching record found.");
+                }
+                conn.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "No matching record found.");
             }
-            conn.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Please enter Employee ID to update.");
+        JOptionPane.showMessageDialog(null, "Please enter both Employee ID and Name to update.");
     }
+
+        // TODO add your handling code here:
+  
     }//GEN-LAST:event_jButtonUpdateDataActionPerformed
 
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
@@ -386,33 +477,34 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
     }//GEN-LAST:event_jButtonPrintActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        // TODO add your handling code here:
-        String employeeId = jTxtEmployeeId.getText();
-    
-    if (!employeeId.isEmpty()) {
+                                            
+    String employeeId = jTxtEmployeeId.getText();
+    String name = jTxtName.getText();
+
+    if (!employeeId.isEmpty() && !name.isEmpty()) {
         try {
-            // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String sql = "DELETE FROM emp WHERE empId = ?";
+            String sql = "DELETE FROM emp WHERE empId = ? AND empName = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, employeeId);
+            pstmt.setString(2, name);
 
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(null, "Data deleted successfully!");
-                // Reset fields
-                jTxtName.setText("");
-                jTxtAge.setText("");
-                jTxtEmployeeId.setText("");
-                jTxtMobile.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "No matching record found.");
             }
             conn.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Please enter Employee ID to delete.");
+        JOptionPane.showMessageDialog(null, "Please enter both Employee ID and Name to delete.");
     }
+
+        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -452,18 +544,36 @@ JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        // Get the selected row index
+                                     
+    // Get the selected row index
+    jTxtName.setText("");
+    jDateChooserDateOfBirth.setDate(null);
+    jTxtEmployeeId.setText("");
+    jTxtMobile.setText("");
+    jTxtAadharNumber.setText("");
     int selectedRow = jTable1.getSelectedRow();
     
     // Retrieve data from the selected row and set them to the corresponding text fields
-    jTxtEmployeeId.setText("");
-    jTxtName.setText("");
-    jTxtAge.setText("");
-    jTxtMobile.setText("");
-    jTxtEmployeeId.setText(jTable1.getValueAt(selectedRow, 0).toString());
-    jTxtName.setText(jTable1.getValueAt(selectedRow, 1).toString());
-    jTxtAge.setText(jTable1.getValueAt(selectedRow, 2).toString());
-    jTxtMobile.setText(jTable1.getValueAt(selectedRow, 3).toString());
+    jTxtEmployeeId.setText(jTable1.getValueAt(selectedRow, 0) != null ? jTable1.getValueAt(selectedRow, 0).toString() : "");
+    jTxtName.setText(jTable1.getValueAt(selectedRow, 1) != null ? jTable1.getValueAt(selectedRow, 1).toString() : "");
+    
+    try {
+        String dateString = jTable1.getValueAt(selectedRow, 2) != null ? jTable1.getValueAt(selectedRow, 2).toString() : "";
+        if (!dateString.isEmpty()) {
+            java.util.Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+            jDateChooserDateOfBirth.setDate(dateOfBirth);
+        } else {
+            jDateChooserDateOfBirth.setDate(null);
+        }
+    } catch (Exception e) {
+        jDateChooserDateOfBirth.setDate(null);
+    }
+    
+    jTxtMobile.setText(jTable1.getValueAt(selectedRow, 3) != null ? jTable1.getValueAt(selectedRow, 3).toString() : "");
+    jTxtAadharNumber.setText(jTable1.getValueAt(selectedRow, 4) != null ? jTable1.getValueAt(selectedRow, 4).toString() : "");
+
+
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -497,6 +607,7 @@ new AdminMenu().setVisible(true);
             java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -521,14 +632,16 @@ new AdminMenu().setVisible(true);
     private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUpdateData;
+    private com.toedter.calendar.JDateChooser jDateChooserDateOfBirth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtAge;
+    private javax.swing.JTextField jTxtAadharNumber;
     private javax.swing.JTextField jTxtEmployeeId;
     private javax.swing.JTextField jTxtMobile;
     private javax.swing.JTextField jTxtName;

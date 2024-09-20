@@ -44,7 +44,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Employee entry");
+        jButton1.setText("Part Entry To Workers");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -58,15 +58,15 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 200, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 200, 30));
 
-        jButton3.setText("Edit Items");
+        jButton3.setText("Edit raw Items");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 200, 30));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, 30));
 
         jButton4.setText("Employee management");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -74,31 +74,31 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, 180, 30));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, 200, 30));
 
-        jButton5.setText("View Part Entry");
+        jButton5.setText("View Product Entry of workers");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 180, 30));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 200, 30));
 
-        jButton6.setText("part entry of employees");
+        jButton6.setText("Product Entry from Workers");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 200, 30));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 200, 30));
 
-        jButton7.setText("View Admin Entry");
+        jButton7.setText("View Buyer Entry");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 180, 30));
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 200, 30));
 
         jButton8.setText("view Inventory stock");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +106,7 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 180, 30));
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 200, 30));
 
         jButton9.setText("Per Price Cost");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -114,23 +114,23 @@ public class AdminMenu extends javax.swing.JFrame {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 200, 30));
+        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 200, 30));
 
-        jButton10.setText("Part made from items");
+        jButton10.setText("B.O.M");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 180, 30));
+        jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 200, 30));
 
-        jButton11.setText("View Employee Entry");
+        jButton11.setText("View Part Entry of workers");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 180, 30));
+        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 200, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 430));
 
@@ -189,7 +189,7 @@ new Part_items().setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-new ViewEntry().setVisible(true);
+new EditEntry().setVisible(true);
             this.dispose();          // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 

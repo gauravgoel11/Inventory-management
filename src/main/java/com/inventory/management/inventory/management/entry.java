@@ -31,6 +31,7 @@ public class entry extends javax.swing.JFrame {
      */
     public entry() {
         initComponents();
+        jDateChooser.setDate(new Date());
 
     }
     
@@ -205,6 +206,7 @@ public class entry extends javax.swing.JFrame {
         System.out.println("Error: " + e.getMessage());
         totalTA.append("\nError: " + e.getMessage());
     }
+    quan.setText("");
 
         
         

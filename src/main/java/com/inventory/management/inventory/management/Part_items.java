@@ -49,7 +49,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.print.PrinterException;
-import javax.swing.table.DefaultTableModel;// For formatting Date to a specific pattern
+import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+// For formatting Date to a specific pattern
 // For autocomplete in JComboBox
 
 
@@ -74,20 +83,26 @@ public class Part_items extends javax.swing.JFrame {
 
         empEnt = new javax.swing.JLabel();
         empName = new javax.swing.JComboBox<>();
-        try{
+        try {
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("Select * from part_items");
-            while(rs.next()){
+
+            Set<String> partNames = new HashSet<>();
+            while (rs.next()) {
                 String s = rs.getString("partName");
-                empName.addItem(s);
+                partNames.add(s);
             }
             con.close();
+
+            for (String partName : partNames) {
+                empName.addItem(partName);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Error is " + e.getMessage());
         }
-        catch(ClassNotFoundException | SQLException e){
-            System.out.println("Error is "+e.getMessage());
-        }
+
         AutoCompleteDecorator.decorate(empName);
         itemName = new javax.swing.JComboBox<>();
         try{
@@ -132,6 +147,11 @@ public class Part_items extends javax.swing.JFrame {
 
         empName.setEditable(true);
         empName.setToolTipText("");
+        empName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empNameActionPerformed(evt);
+            }
+        });
         getContentPane().add(empName);
         empName.setBounds(10, 100, 200, 30);
 
@@ -161,7 +181,7 @@ public class Part_items extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonDelete);
-        jButtonDelete.setBounds(510, 200, 80, 23);
+        jButtonDelete.setBounds(510, 200, 120, 23);
 
         jButton2.setText("Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +190,7 @@ public class Part_items extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(510, 80, 80, 23);
+        jButton2.setBounds(510, 80, 120, 23);
 
         jLabel5.setText("Existing Part Name");
         getContentPane().add(jLabel5);
@@ -185,7 +205,7 @@ public class Part_items extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonView);
-        jButtonView.setBounds(510, 110, 80, 23);
+        jButtonView.setBounds(510, 110, 120, 23);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,10 +218,15 @@ public class Part_items extends javax.swing.JFrame {
                 "Part", "Item", "Quantity"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(0, 230, 600, 230);
+        jScrollPane2.setBounds(0, 230, 640, 230);
         getContentPane().add(jTextFieldNewPartName);
         jTextFieldNewPartName.setBounds(330, 100, 160, 30);
 
@@ -212,42 +237,56 @@ public class Part_items extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonAdd);
-        jButtonAdd.setBounds(510, 140, 80, 23);
+        jButtonAdd.setBounds(510, 140, 120, 23);
 
-        jButtonEdit.setText("Edit");
+        jButtonEdit.setText("change quantity");
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditActionPerformed(evt);
             }
         });
         getContentPane().add(jButtonEdit);
-        jButtonEdit.setBounds(510, 170, 80, 23);
+        jButtonEdit.setBounds(510, 170, 120, 23);
 
-        setSize(new java.awt.Dimension(614, 479));
+        setSize(new java.awt.Dimension(659, 479));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        // TODO add your handling code here:
-        // Get the selected item and quantity
-String selectedItem = (String) itemName.getSelectedItem();
+int row = jTable1.getSelectedRow();
+if (row >= 0) {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    String partNameValue = model.getValueAt(row, 0).toString();
+    String itemNameValue = model.getValueAt(row, 1).toString(); // Assuming itemName is in column 2
     
-    if (selectedItem != null && !selectedItem.isEmpty()) {
-        try {
-            Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String query = "DELETE FROM items WHERE itemName = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, selectedItem);
-            ps.executeUpdate();
+    
+    // Show confirmation dialog before deletion
+    int response = JOptionPane.showConfirmDialog(null, 
+            "Do you want to delete the entry for part: " + partNameValue + 
+             " for item " + itemNameValue + "?", 
+            "Confirm Deletion", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.WARNING_MESSAGE);
+    
+    if (response == JOptionPane.YES_OPTION) {
+        String sql = "DELETE FROM part_items WHERE partName = ? AND itemName = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, partNameValue);
+            pstmt.setString(2, itemNameValue);
+           
+            pstmt.executeUpdate();
             
-            con.close();
-            JOptionPane.showMessageDialog(null, "Item Deleted Successfully");
+            // Remove row from the table
+            model.removeRow(row);
+            JOptionPane.showMessageDialog(null, "Entry deleted successfully.");
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select an item to delete");
     }
+} else {
+    JOptionPane.showMessageDialog(null, "Please select an entry to delete.");
+}        
 
         
         
@@ -287,29 +326,43 @@ String selectedItem = (String) itemName.getSelectedItem();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        int row = jTable1.getSelectedRow();
+if (row >= 0) {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    String partNameValue = model.getValueAt(row, 0).toString();
+    String itemNameValue = model.getValueAt(row, 1).toString(); // Assuming itemName is in column 2
+    String oldQuantity = model.getValueAt(row, 2).toString();
+    String newQuantity = jTextFieldQuantity.getText();
 
-    String newPartName = jTextFieldNewPartName.getText();
-    String selectedItem = (String) itemName.getSelectedItem();
-    String quantity = jTextFieldQuantity.getText();
-    
-    if (!newPartName.isEmpty() && !selectedItem.isEmpty() && !quantity.isEmpty()) {
+    // Show confirmation dialog before updating quantity
+    int response = JOptionPane.showConfirmDialog(null, 
+            "Do you want to change the quantity for item " + itemNameValue + 
+            " from " + oldQuantity + " to " + newQuantity + "?", 
+            "Confirm Quantity Update", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE);
+
+    if (response == JOptionPane.YES_OPTION) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String query = "UPDATE part_items SET partName = ?, quantity = ? WHERE itemName = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, newPartName);
-            ps.setInt(2, Integer.parseInt(quantity));
-            ps.setString(3, selectedItem);
-            ps.executeUpdate();
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+            String sql = "UPDATE part_items SET quantity = ? WHERE partName = ? AND itemName = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newQuantity);
+            pstmt.setString(2, partNameValue);
+            pstmt.setString(3, itemNameValue);
+            pstmt.executeUpdate();
             
-            con.close();
-            JOptionPane.showMessageDialog(null, "Item Updated Successfully");
+            // Update table display
+            model.setValueAt(newQuantity, row, 2);
+            JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please fill in all fields");
-    }
+    } 
+} else {
+    JOptionPane.showMessageDialog(null, "Please select an entry to update.");
+}
+
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEditActionPerformed
@@ -336,6 +389,29 @@ String selectedItem = (String) itemName.getSelectedItem();
         System.out.println("Error: " + e.getMessage());
     }        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonViewActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+          int row = jTable1.getSelectedRow();
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    
+    String partnameValue = model.getValueAt(row, 0).toString();
+    String itemnameValue = model.getValueAt(row, 1).toString();
+    String quantityValue = model.getValueAt(row, 2).toString();
+    
+
+    empName.setSelectedItem(partnameValue);
+    itemName.setSelectedItem(itemnameValue);
+    // Assuming `empName` is a combo box
+    jTextFieldQuantity.setText(quantityValue);
+    
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void empNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empNameActionPerformed
+String selectedEmpName = (String) empName.getSelectedItem();
+    // Set the selected item as the text of jTextFieldNewPartName
+    jTextFieldNewPartName.setText(selectedEmpName);        // TODO add your handling code here:
+    }//GEN-LAST:event_empNameActionPerformed
 
     /**
      * @param args the command line arguments

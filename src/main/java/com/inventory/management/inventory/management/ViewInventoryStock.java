@@ -46,6 +46,7 @@ public class ViewInventoryStock extends javax.swing.JFrame {
      */
     public ViewInventoryStock() {
         initComponents();
+        itemName.setSelectedIndex(-1);
     }
 
     /**

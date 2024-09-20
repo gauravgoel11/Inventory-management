@@ -46,6 +46,7 @@ public class ViewpartEntry extends javax.swing.JFrame {
      */
     public ViewpartEntry() {
         initComponents();
+        empName.setSelectedIndex(-1);
     }
 
     /**
@@ -89,6 +90,10 @@ public class ViewpartEntry extends javax.swing.JFrame {
         jButtonReset = new javax.swing.JButton();
         jBtnTotalWork = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldQuantity = new javax.swing.JTextField();
+        jButtonDeleteEntry = new javax.swing.JButton();
+        jButtonChangeQuantity = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,6 +109,11 @@ public class ViewpartEntry extends javax.swing.JFrame {
                 "Name", "EmployeeID", "part", "Quantity", "Date"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("All Entry");
@@ -135,7 +145,7 @@ public class ViewpartEntry extends javax.swing.JFrame {
 
         empEnt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         empEnt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        empEnt.setText("View Part Entry");
+        empEnt.setText("View And Edit Part Entry");
 
         empName.setEditable(true);
         empName.setToolTipText("");
@@ -168,88 +178,100 @@ public class ViewpartEntry extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Quantity");
+
+        jButtonDeleteEntry.setText("Delete entry");
+        jButtonDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteEntryActionPerformed(evt);
+            }
+        });
+
+        jButtonChangeQuantity.setText("Change quantity");
+        jButtonChangeQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChangeQuantityActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(133, 133, 133)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(empName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jDateChooserFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonCusotmEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jBtnTotalWork)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(42, 42, 42))
             .addComponent(empEnt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(empName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooserFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonCusotmEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBtnTotalWork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonChangeQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonDeleteEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(empEnt, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1)
+                    .addComponent(jButtonReset)
+                    .addComponent(jButton2))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(empName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jDateChooserFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(jDateChooserTo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(jTextFieldQuantity))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(empName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooserFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                            .addComponent(jButtonCusotmEntry)
+                            .addComponent(jButtonPrint)
+                            .addComponent(jButtonDeleteEntry))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonPrint)
-                            .addComponent(jButtonCusotmEntry)
-                            .addComponent(jButtonReset))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnTotalWork)
                             .addComponent(jButtonExit)
-                            .addComponent(jButton1)
-                            .addComponent(jBtnTotalWork))))
+                            .addComponent(jButtonChangeQuantity))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                .addGap(14, 14, 14))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
@@ -410,6 +432,7 @@ try {
        jDateChooserFrom.setDate(null);
         jDateChooserTo.setDate(null);
         empName.setSelectedIndex(-1);
+        jTextFieldQuantity.setText("");
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jBtnTotalWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalWorkActionPerformed
@@ -506,6 +529,106 @@ try {
         this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
+        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        if (row >= 0) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            String empNameValue = model.getValueAt(row, 0).toString();
+            String partNameValue = model.getValueAt(row, 2).toString(); // Assuming itemName is in column 2
+            String entryDate = model.getValueAt(row, 4).toString();
+
+            // Show confirmation dialog before deletion
+            int response = JOptionPane.showConfirmDialog(null,
+                "Do you want to delete the entry for employee: " + empNameValue +
+                " on " + entryDate + " for item " + partNameValue + "?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+            if (response == JOptionPane.YES_OPTION) {
+                String sql = "DELETE FROM partentry WHERE empName = ? AND partName = ? AND entryDate = ?";
+                try (Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+                    PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, empNameValue);
+                    pstmt.setString(2, partNameValue);
+                    pstmt.setString(3, entryDate);
+                    pstmt.executeUpdate();
+
+                    // Remove row from the table
+                    model.removeRow(row);
+                    JOptionPane.showMessageDialog(null, "Entry deleted successfully.");
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an entry to delete.");
+        }
+    }//GEN-LAST:event_jButtonDeleteEntryActionPerformed
+
+    private void jButtonChangeQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangeQuantityActionPerformed
+        int row = jTable1.getSelectedRow();
+        if (row >= 0) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            String empNameValue = model.getValueAt(row, 0).toString();
+            String partNameValue = model.getValueAt(row, 2).toString(); // Assuming itemName is in column 2
+            String entryDate = model.getValueAt(row, 4).toString();
+            String oldQuantity = model.getValueAt(row, 3).toString();
+            String newQuantity = jTextFieldQuantity.getText();
+
+            // Show confirmation dialog before updating quantity
+            int response = JOptionPane.showConfirmDialog(null,
+                "Do you want to change the quantity for item " + partNameValue +
+                " from " + oldQuantity + " to " + newQuantity + "?",
+                "Confirm Quantity Update",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+            if (response == JOptionPane.YES_OPTION) {
+                try {
+                    Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+                    String sql = "UPDATE partentry SET quantity = ? WHERE empName = ? AND partName = ? AND entryDate = ?";
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, newQuantity);
+                    pstmt.setString(2, empNameValue);
+                    pstmt.setString(3, partNameValue);
+                    pstmt.setString(4, entryDate);
+                    pstmt.executeUpdate();
+
+                    // Update table display
+                    model.setValueAt(newQuantity, row, 3);
+                    JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an entry to update.");
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonChangeQuantityActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+            int row = jTable1.getSelectedRow();
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    
+    String empNameValue = model.getValueAt(row, 0).toString();
+    String quantityValue = model.getValueAt(row, 3).toString();
+    String dateValue = model.getValueAt(row, 4).toString();
+
+    empName.setSelectedItem(empNameValue);  // Assuming `empName` is a combo box
+    jTextFieldQuantity.setText(quantityValue);
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+        jDateChooserFrom.setDate(sdf.parse(dateValue));  // Set date field
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Date Parse Error: " + e.getMessage());
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -548,17 +671,21 @@ try {
     private javax.swing.JButton jBtnTotalWork;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonChangeQuantity;
     private javax.swing.JButton jButtonCusotmEntry;
+    private javax.swing.JButton jButtonDeleteEntry;
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonReset;
     private com.toedter.calendar.JDateChooser jDateChooserFrom;
     private com.toedter.calendar.JDateChooser jDateChooserTo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldQuantity;
     // End of variables declaration//GEN-END:variables
 }
