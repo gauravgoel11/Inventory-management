@@ -34,17 +34,20 @@ import java.awt.print.PrinterException;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.HashMap;
+
 
 /**
  *
  * @author gaura
  */
-public class EditEntry extends javax.swing.JFrame {
+public class ViewEmployeeStock extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewEntry
      */
-    public EditEntry() {
+    public ViewEmployeeStock() {
         initComponents();
         empName.setSelectedIndex(-1);
     }
@@ -61,7 +64,6 @@ public class EditEntry extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jButtonPrint = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -85,28 +87,24 @@ public class EditEntry extends javax.swing.JFrame {
             System.out.println("Error is "+e.getMessage());
         }
         AutoCompleteDecorator.decorate(empName);
-        jButtonCusotmEntry = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButtonChangeQuantity = new javax.swing.JButton();
-        jButtonDeleteEntry = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldQuantity = new javax.swing.JTextField();
-        jBtnTotalWork = new javax.swing.JButton();
-        jButtonExit = new javax.swing.JButton();
+        jBtnTotalCredit = new javax.swing.JButton();
+        jBtnTotalDebit = new javax.swing.JButton();
+        jBtnTotalStock = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Name", "EmployeeID", "Category", "Quantity", "Date"
+                "Name", "EmployeeID", "Category", "Quantity"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,13 +113,6 @@ public class EditEntry extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("All Entry");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButtonPrint.setText("Print");
         jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -138,17 +129,10 @@ public class EditEntry extends javax.swing.JFrame {
 
         empEnt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         empEnt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        empEnt.setText("View And Edit Employee Entry");
+        empEnt.setText("View Employee Stock");
 
         empName.setEditable(true);
         empName.setToolTipText("");
-
-        jButtonCusotmEntry.setText("Custom entry");
-        jButtonCusotmEntry.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCusotmEntryActionPerformed(evt);
-            }
-        });
 
         jButtonReset.setText("Erase");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
@@ -164,33 +148,24 @@ public class EditEntry extends javax.swing.JFrame {
             }
         });
 
-        jButtonChangeQuantity.setText("Change quantity");
-        jButtonChangeQuantity.addActionListener(new java.awt.event.ActionListener() {
+        jBtnTotalCredit.setText("Total Credit");
+        jBtnTotalCredit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonChangeQuantityActionPerformed(evt);
+                jBtnTotalCreditActionPerformed(evt);
             }
         });
 
-        jButtonDeleteEntry.setText("Delete entry");
-        jButtonDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
+        jBtnTotalDebit.setText("Total Debit");
+        jBtnTotalDebit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeleteEntryActionPerformed(evt);
+                jBtnTotalDebitActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Quantity");
-
-        jBtnTotalWork.setText("Total work");
-        jBtnTotalWork.addActionListener(new java.awt.event.ActionListener() {
+        jBtnTotalStock.setText("Total Stock");
+        jBtnTotalStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnTotalWorkActionPerformed(evt);
-            }
-        });
-
-        jButtonExit.setText("Exit");
-        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExitActionPerformed(evt);
+                jBtnTotalStockActionPerformed(evt);
             }
         });
 
@@ -212,36 +187,26 @@ public class EditEntry extends javax.swing.JFrame {
                         .addComponent(jDateChooserFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonCusotmEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBtnTotalWork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButtonPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonChangeQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonDeleteEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBtnTotalCredit, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jBtnTotalDebit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBtnTotalStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(32, 32, 32))
+                .addGap(205, 205, 205))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,28 +230,22 @@ public class EditEntry extends javax.swing.JFrame {
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jDateChooserTo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jButton1)
+                                    .addComponent(jBtnTotalCredit)
+                                    .addComponent(jButton2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jBtnTotalDebit)
                                     .addComponent(jButtonReset))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(6, 6, 6)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonCusotmEntry)
                                     .addComponent(jButtonPrint)
-                                    .addComponent(jButtonDeleteEntry))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonChangeQuantity)
-                                    .addComponent(jBtnTotalWork)
-                                    .addComponent(jButtonExit))))
-                        .addGap(36, 36, 36)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBtnTotalStock))))
+                        .addGap(44, 44, 44)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
 
@@ -295,41 +254,6 @@ public class EditEntry extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-try {
-            // Connect to the database
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String sql = "SELECT * FROM entry";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-
-            // Get table model
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            // Clear existing data
-            model.setRowCount(0);
-
-            // Get column names dynamically
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            // Add rows to the model
-            while (rs.next()) {
-                Object[] row = new Object[columnCount];
-                for (int i = 1; i <= columnCount; i++) {
-                    row[i - 1] = rs.getObject(i);
-                }
-                model.addRow(row);
-            }
-
-            // Close connections
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
         // TODO add your handling code here:
@@ -345,99 +269,12 @@ try {
         }
     }//GEN-LAST:event_jButtonPrintActionPerformed
 private JFrame frame;
-    private void jButtonCusotmEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCusotmEntryActionPerformed
-try {
-    // Get selected employee name and ID
-    String selectedEmployee = (empName.getSelectedIndex() != -1) ? empName.getSelectedItem().toString() : "";
-    
-    String empName = "";
-    String empID = "";
-    
-    // Check if an employee is selected
-    if (!selectedEmployee.isEmpty()) {
-        String[] employeeData = selectedEmployee.split(" ");
-        empName = employeeData[0];
-        empID = employeeData[1];
-    }
-    
-    // Get selected dates
-    java.util.Date fromDate = jDateChooserFrom.getDate();
-    java.util.Date toDate = jDateChooserTo.getDate();
-    
-    // Format the date to "yyyy-MM-dd"
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    String formattedFromDate = (fromDate != null) ? formatter.format(fromDate) : null;
-    String formattedToDate = (toDate != null) ? formatter.format(toDate) : null;
-    
-    // Prepare SQL query dynamically
-    StringBuilder query = new StringBuilder("SELECT * FROM entry WHERE 1=1");
-    
-    if (!empName.isEmpty()) {
-        query.append(" AND empName = ? AND empID = ?");
-    }
-    if (formattedFromDate != null) {
-        query.append(" AND entryDate >= ?");
-    }
-    if (formattedToDate != null) {
-        query.append(" AND entryDate <= ?");
-    }
-    
-    // Connect to the database
-    Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-    PreparedStatement pstmt = conn.prepareStatement(query.toString());
-    
-    // Set parameters dynamically
-    int paramIndex = 1;
-    
-    if (!empName.isEmpty()) {
-        pstmt.setString(paramIndex++, empName);
-        pstmt.setString(paramIndex++, empID);
-    }
-    if (formattedFromDate != null) {
-        pstmt.setString(paramIndex++, formattedFromDate);
-    }
-    if (formattedToDate != null) {
-        pstmt.setString(paramIndex++, formattedToDate);
-    }
-    
-    // Execute query
-    ResultSet rs = pstmt.executeQuery();
-    
-    // Get table model
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    // Clear existing data
-    model.setRowCount(0);
-    
-    // Get column names dynamically
-    ResultSetMetaData metaData = rs.getMetaData();
-    int columnCount = metaData.getColumnCount();
-    
-    // Add rows to the model
-    while (rs.next()) {
-        Object[] row = new Object[columnCount];
-        for (int i = 1; i <= columnCount; i++) {
-            row[i - 1] = rs.getObject(i);
-        }
-        model.addRow(row);
-    }
-    
-    // Close connections
-    rs.close();
-    pstmt.close();
-    conn.close();
-} catch (SQLException e) {
-    JOptionPane.showMessageDialog(null, e.getMessage());
-}
-
-      // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCusotmEntryActionPerformed
-
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         // TODO add your handling code here:
        jDateChooserFrom.setDate(null);
         jDateChooserTo.setDate(null);
         empName.setSelectedIndex(-1);
-        jTextFieldQuantity.setText("");
+        
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -455,7 +292,7 @@ try {
     String dateValue = model.getValueAt(row, 4).toString();
 
     empName.setSelectedItem(empNameValue);  // Assuming `empName` is a combo box
-    jTextFieldQuantity.setText(quantityValue);
+    
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     try {
@@ -466,89 +303,7 @@ try {
     
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
-        // TODO add your handling code here:
-int row = jTable1.getSelectedRow();
-if (row >= 0) {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    String empNameValue = model.getValueAt(row, 0).toString();
-    String itemNameValue = model.getValueAt(row, 2).toString(); // Assuming itemName is in column 2
-    String entryDate = model.getValueAt(row, 4).toString();
-    
-    // Show confirmation dialog before deletion
-    int response = JOptionPane.showConfirmDialog(null, 
-            "Do you want to delete the entry for employee: " + empNameValue + 
-            " on " + entryDate + " for item " + itemNameValue + "?", 
-            "Confirm Deletion", 
-            JOptionPane.YES_NO_OPTION, 
-            JOptionPane.WARNING_MESSAGE);
-    
-    if (response == JOptionPane.YES_OPTION) {
-        String sql = "DELETE FROM entry WHERE empName = ? AND itemName = ? AND entryDate = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, empNameValue);
-            pstmt.setString(2, itemNameValue);
-            pstmt.setString(3, entryDate);
-            pstmt.executeUpdate();
-            
-            // Remove row from the table
-            model.removeRow(row);
-            JOptionPane.showMessageDialog(null, "Entry deleted successfully.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-} else {
-    JOptionPane.showMessageDialog(null, "Please select an entry to delete.");
-}
-
-    }//GEN-LAST:event_jButtonDeleteEntryActionPerformed
-
-    private void jButtonChangeQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangeQuantityActionPerformed
-        int row = jTable1.getSelectedRow();
-if (row >= 0) {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    String empNameValue = model.getValueAt(row, 0).toString();
-    String itemNameValue = model.getValueAt(row, 2).toString(); // Assuming itemName is in column 2
-    String entryDate = model.getValueAt(row, 4).toString();
-    String oldQuantity = model.getValueAt(row, 3).toString();
-    String newQuantity = jTextFieldQuantity.getText();
-
-    // Show confirmation dialog before updating quantity
-    int response = JOptionPane.showConfirmDialog(null, 
-            "Do you want to change the quantity for item " + itemNameValue + 
-            " from " + oldQuantity + " to " + newQuantity + "?", 
-            "Confirm Quantity Update", 
-            JOptionPane.YES_NO_OPTION, 
-            JOptionPane.QUESTION_MESSAGE);
-
-    if (response == JOptionPane.YES_OPTION) {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-            String sql = "UPDATE entry SET quantity = ? WHERE empName = ? AND itemName = ? AND entryDate = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newQuantity);
-            pstmt.setString(2, empNameValue);
-            pstmt.setString(3, itemNameValue);
-            pstmt.setString(4, entryDate);
-            pstmt.executeUpdate();
-            
-            // Update table display
-            model.setValueAt(newQuantity, row, 3);
-            JOptionPane.showMessageDialog(null, "Quantity updated successfully.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    } 
-} else {
-    JOptionPane.showMessageDialog(null, "Please select an entry to update.");
-}
-
-            // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonChangeQuantityActionPerformed
-
-    private void jBtnTotalWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalWorkActionPerformed
+    private void jBtnTotalCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalCreditActionPerformed
 
         try {
             // Get selected employee name and ID
@@ -634,17 +389,227 @@ if (row >= 0) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-    }//GEN-LAST:event_jBtnTotalWorkActionPerformed
+    }//GEN-LAST:event_jBtnTotalCreditActionPerformed
 
-    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+    private void jBtnTotalDebitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalDebitActionPerformed
+
+        try {
+            // Get selected employee name and ID
+            String selectedEmployee = (empName.getSelectedIndex() != -1) ? empName.getSelectedItem().toString() : "";
+
+            String empName = "";
+            String empID = "";
+
+            // Check if an employee is selected
+            if (!selectedEmployee.isEmpty()) {
+                String[] employeeData = selectedEmployee.split(" ");
+                empName = employeeData[0];
+                empID = employeeData[1];
+            }
+
+            // Get selected dates
+            java.util.Date fromDate = jDateChooserFrom.getDate();
+            java.util.Date toDate = jDateChooserTo.getDate();
+
+            // Format the date to "yyyy-MM-dd"
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedFromDate = (fromDate != null) ? formatter.format(fromDate) : null;
+            String formattedToDate = (toDate != null) ? formatter.format(toDate) : null;
+
+            // Prepare SQL query dynamically
+            StringBuilder query = new StringBuilder("SELECT empName, empID, partName, SUM(quantity) as totalQuantity FROM partentry WHERE 1=1");
+
+            if (!empName.isEmpty()) {
+                query.append(" AND empName = ? AND empID = ?");
+            }
+            if (formattedFromDate != null) {
+                query.append(" AND partentryDate >= ?");
+            }
+            if (formattedToDate != null) {
+                query.append(" AND partentryDate <= ?");
+            }
+            query.append(" GROUP BY empName, empID, partName");
+
+            // Connect to the database
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+            PreparedStatement pstmt = conn.prepareStatement(query.toString());
+
+            // Set parameters dynamically
+            int paramIndex = 1;
+
+            if (!empName.isEmpty()) {
+                pstmt.setString(paramIndex++, empName);
+                pstmt.setString(paramIndex++, empID);
+            }
+            if (formattedFromDate != null) {
+                pstmt.setString(paramIndex++, formattedFromDate);
+            }
+            if (formattedToDate != null) {
+                pstmt.setString(paramIndex++, formattedToDate);
+            }
+
+            // Execute query
+            ResultSet rs = pstmt.executeQuery();
+
+            // Get the table model from your JTable
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            // Clear the existing rows in the table
+            model.setRowCount(0);
+
+            // Populate the table with the query result
+            while (rs.next()) {
+                String resultEmpName = rs.getString("empName");
+                String resultEmpID = rs.getString("empID");
+                String partName = rs.getString("partName");
+                int totalQuantity = rs.getInt("totalQuantity");
+
+                // Add a new row to the table model
+                model.addRow(new Object[]{resultEmpName, resultEmpID, partName, totalQuantity});
+            }
+
+            // Close connections
+            rs.close();
+            pstmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }//GEN-LAST:event_jBtnTotalDebitActionPerformed
+
+    private void jBtnTotalStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTotalStockActionPerformed
         // TODO add your handling code here:
-        frame = new JFrame ("Exit");
-        if (JOptionPane.showConfirmDialog(frame, "Confirm if you want to exit","sqlite Connector",
-            JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
-    {
+        
+                                              
 
-        System.exit(0); }
-    }//GEN-LAST:event_jButtonExitActionPerformed
+    try {
+        // Get selected employee name and ID
+        String selectedEmployee = (empName.getSelectedIndex() != -1) ? empName.getSelectedItem().toString() : "";
+
+        String empName = "";
+        String empID = "";
+
+        // Check if an employee is selected
+        if (!selectedEmployee.isEmpty()) {
+            String[] employeeData = selectedEmployee.split(" ");
+            empName = employeeData[0];
+            empID = employeeData[1];
+        }
+
+        // Get selected dates
+        java.util.Date fromDate = jDateChooserFrom.getDate();
+        java.util.Date toDate = jDateChooserTo.getDate();
+
+        // Format the date to "yyyy-MM-dd"
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedFromDate = (fromDate != null) ? formatter.format(fromDate) : null;
+        String formattedToDate = (toDate != null) ? formatter.format(toDate) : null;
+
+        // Connect to the database
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+        Statement stmt = conn.createStatement();
+
+        // Create a temporary table to store intermediate results
+        stmt.execute("CREATE TEMPORARY TABLE temp_stock (empName TEXT, empID TEXT, itemName TEXT, creditQuantity INTEGER, debitQuantity INTEGER)");
+
+        // Insert total credits into the temporary table
+        StringBuilder creditQuery = new StringBuilder("INSERT INTO temp_stock (empName, empID, itemName, creditQuantity, debitQuantity) ");
+        creditQuery.append("SELECT empName, empID, itemName, SUM(quantity) as creditQuantity, 0 as debitQuantity FROM entry WHERE 1=1");
+        if (!empName.isEmpty()) {
+            creditQuery.append(" AND empName = ? AND empID = ?");
+        }
+        if (formattedFromDate != null) {
+            creditQuery.append(" AND entryDate >= ?");
+        }
+        if (formattedToDate != null) {
+            creditQuery.append(" AND entryDate <= ?");
+        }
+        creditQuery.append(" GROUP BY empName, empID, itemName");
+
+        PreparedStatement creditPstmt = conn.prepareStatement(creditQuery.toString());
+        int paramIndex = 1;
+        if (!empName.isEmpty()) {
+            creditPstmt.setString(paramIndex++, empName);
+            creditPstmt.setString(paramIndex++, empID);
+        }
+        if (formattedFromDate != null) {
+            creditPstmt.setString(paramIndex++, formattedFromDate);
+        }
+        if (formattedToDate != null) {
+            creditPstmt.setString(paramIndex++, formattedToDate);
+        }
+        creditPstmt.executeUpdate();
+
+        // Calculate total debits by reversing the final product and insert into the temporary table
+        StringBuilder debitQuery = new StringBuilder("INSERT INTO temp_stock (empName, empID, itemName, creditQuantity, debitQuantity) ");
+        debitQuery.append("SELECT empName, empID, part_items.itemName, 0 as creditQuantity, SUM(partentry.quantity * part_items.quantity) as debitQuantity ");
+        debitQuery.append("FROM partentry ");
+        debitQuery.append("JOIN part_items ON partentry.partName = part_items.partName ");
+        debitQuery.append("WHERE 1=1");
+        if (!empName.isEmpty()) {
+            debitQuery.append(" AND empName = ? AND empID = ?");
+        }
+        if (formattedFromDate != null) {
+            debitQuery.append(" AND partentryDate >= ?");
+        }
+        if (formattedToDate != null) {
+            debitQuery.append(" AND partentryDate <= ?");
+        }
+        debitQuery.append(" GROUP BY empName, empID, part_items.itemName");
+
+        PreparedStatement debitPstmt = conn.prepareStatement(debitQuery.toString());
+        paramIndex = 1;
+        if (!empName.isEmpty()) {
+            debitPstmt.setString(paramIndex++, empName);
+            debitPstmt.setString(paramIndex++, empID);
+        }
+        if (formattedFromDate != null) {
+            debitPstmt.setString(paramIndex++, formattedFromDate);
+        }
+        if (formattedToDate != null) {
+            debitPstmt.setString(paramIndex++, formattedToDate);
+        }
+        debitPstmt.executeUpdate();
+
+        // Calculate remaining stock for each item
+        String remainingStockQuery = "SELECT empName, empID, itemName, SUM(creditQuantity) - SUM(debitQuantity) as totalStock FROM temp_stock GROUP BY empName, empID, itemName";
+        ResultSet rs = stmt.executeQuery(remainingStockQuery);
+
+        // Get the table model from your JTable
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        // Clear the existing rows in the table
+        model.setRowCount(0);
+
+        // Populate the table with the remaining stock
+        while (rs.next()) {
+            String resultEmpName = rs.getString("empName");
+            String resultEmpID = rs.getString("empID");
+            String itemName = rs.getString("itemName");
+            int totalStock = rs.getInt("totalStock");
+            model.addRow(new Object[]{resultEmpName, resultEmpID, itemName, totalStock});
+        }
+
+        // Close connections
+        rs.close();
+        creditPstmt.close();
+        debitPstmt.close();
+        stmt.execute("DROP TABLE temp_stock");
+        stmt.close();
+        conn.close();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+
+
+
+
+
+
+    }//GEN-LAST:event_jBtnTotalStockActionPerformed
 
     /**
      * @param args the command line arguments
@@ -663,14 +628,18 @@ if (row >= 0) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewEmployeeStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewEmployeeStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewEmployeeStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewEmployeeStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -679,7 +648,7 @@ if (row >= 0) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditEntry().setVisible(true);
+                new ViewEmployeeStock().setVisible(true);
             }
         });
     }
@@ -687,24 +656,19 @@ if (row >= 0) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel empEnt;
     private javax.swing.JComboBox<String> empName;
-    private javax.swing.JButton jBtnTotalWork;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtnTotalCredit;
+    private javax.swing.JButton jBtnTotalDebit;
+    private javax.swing.JButton jBtnTotalStock;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonChangeQuantity;
-    private javax.swing.JButton jButtonCusotmEntry;
-    private javax.swing.JButton jButtonDeleteEntry;
-    private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonReset;
     private com.toedter.calendar.JDateChooser jDateChooserFrom;
     private com.toedter.calendar.JDateChooser jDateChooserTo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextFieldQuantity;
     // End of variables declaration//GEN-END:variables
 }

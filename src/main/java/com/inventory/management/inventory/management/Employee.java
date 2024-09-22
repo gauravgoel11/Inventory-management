@@ -310,34 +310,38 @@ public class Employee extends javax.swing.JFrame {
 
     private void jButtonAddDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddDataActionPerformed
         // TODO add your handling code here:
-                                               
-    String name = jTxtName.getText();
-    java.util.Date dateOfBirth = jDateChooserDateOfBirth.getDate();
-    String employeeId = jTxtEmployeeId.getText();
-    String mobile = jTxtMobile.getText();
-    String aadharNumber = jTxtAadharNumber.getText();
+     String name = jTxtName.getText();
+        java.util.Date dateOfBirth = jDateChooserDateOfBirth.getDate();
+        String employeeId = jTxtEmployeeId.getText();
+        String mobile = jTxtMobile.getText();
+        String aadharNumber = jTxtAadharNumber.getText();
 
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    String formattedDateOfBirth = (dateOfBirth != null) ? formatter.format(dateOfBirth) : null;
+        // Validate that name and employeeId are not empty
+        if (name == null || name.trim().isEmpty() || employeeId == null || employeeId.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name and Employee ID cannot be empty");
+            return;
+        }
 
-    try {
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
-        String sql = "INSERT INTO emp (empName, dateOfBirth, empId, mobile, aadharNumber) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, name);
-        pstmt.setString(2, formattedDateOfBirth);
-        pstmt.setString(3, employeeId);
-        pstmt.setString(4, mobile);
-        pstmt.setString(5, aadharNumber);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDateOfBirth = (dateOfBirth != null) ? formatter.format(dateOfBirth) : null;
 
-        pstmt.executeUpdate();
-        conn.close();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:inven.db");
+            String sql = "INSERT INTO emp (empName, dateOfBirth, empId, mobile, aadharNumber) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, formattedDateOfBirth);
+            pstmt.setString(3, employeeId);
+            pstmt.setString(4, mobile);
+            pstmt.setString(5, aadharNumber);
 
-        JOptionPane.showMessageDialog(null, "Data Added Successfully");
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e.getMessage());
-    }
+            pstmt.executeUpdate();
+            conn.close();
 
+            JOptionPane.showMessageDialog(null, "Data Added Successfully");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
 
 
     }//GEN-LAST:event_jButtonAddDataActionPerformed
@@ -606,6 +610,8 @@ new AdminMenu().setVisible(true);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
